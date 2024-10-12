@@ -1,0 +1,12 @@
+services:
+  backend:
+    build: ./backend
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: host.docker.internal
+      DB_USER: root
+      DB_PASSWORD: example
+      DB_NAME: socialapp
