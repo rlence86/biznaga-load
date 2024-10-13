@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copiamos el archivo de construcción de Maven
-COPY target/social-biznaga-0.0.2-SNAPSHOT.jar ./
+COPY target/social-biznaga-0.0.3-SNAPSHOT.jar ./
 COPY elastic-apm-agent.jar ./
 
 # Exponemos el puerto 8080
@@ -19,4 +19,4 @@ CMD java -javaagent:elastic-apm-agent.jar \
 -Delastic.apm.secret_token= \
 -Delastic.apm.environment=production \
 -Delastic.apm.application_packages=com.ramonlence.social_biznaga \
--jar social-biznaga-0.0.2-SNAPSHOT.jar
+-jar social-biznaga-0.0.3-SNAPSHOT.jar

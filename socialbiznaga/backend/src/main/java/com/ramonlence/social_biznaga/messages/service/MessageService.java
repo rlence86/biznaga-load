@@ -1,17 +1,20 @@
 package com.ramonlence.social_biznaga.messages.service;
 
 import com.ramonlence.social_biznaga.messages.dto.MessageDTO;
+import com.ramonlence.social_biznaga.messages.dto.MessageResponseDTO;
 import com.ramonlence.social_biznaga.messages.model.Message;
 import com.ramonlence.social_biznaga.messages.repository.MessageRepository;
 import com.ramonlence.social_biznaga.users.model.User;
 import com.ramonlence.social_biznaga.users.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -31,15 +34,29 @@ public class MessageService {
         return messageRepository.save(message);
     }
 
-    public List<Message> getAllMessagesByPage(int page) {
+    @Cacheable(value = "messagesCache")
+    public List<MessageResponseDTO> getAllMessagesByPage(int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return messageRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return mapMessagesToMessageResponseDTO(messageRepository.findAllByOrderByCreatedAtDesc(pageable));
     }
 
-    public List<Message> getMessagesByUser(String username) {
+    public List<MessageResponseDTO> getMessagesByUser(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        return messageRepository.findByUser(user);
+        return mapMessagesToMessageResponseDTO(messageRepository.findByUser(user));
     }
+
+
+    private List<MessageResponseDTO> mapMessagesToMessageResponseDTO(List<Message> messages) {
+        return messages.stream()
+                .map(message -> MessageResponseDTO.builder()
+                        .content(message.getContent())
+                        .createdAt(message.getCreatedAt())
+                        .userName(message.getUser().getUsername())
+                        .build()
+                )
+                .collect(Collectors.toList());
+    }
+
 }

@@ -29,25 +29,13 @@ public class MessageController {
 
     @GetMapping("/page/{page}")
     public ResponseEntity<List<MessageResponseDTO>> getAllMessages(@PathVariable int page) {
-        List<Message> messages = messageService.getAllMessagesByPage(page);
-        List<MessageResponseDTO> response = mapMessagesToMessageResponseDTO(messages);
-        return ResponseEntity.ok(response);
-    }
-
-    private List<MessageResponseDTO> mapMessagesToMessageResponseDTO(List<Message> messages) {
-        return messages.stream()
-                .map(message -> MessageResponseDTO.builder()
-                        .content(message.getContent())
-                        .createdAt(message.getCreatedAt())
-                        .userName(message.getUser().getUsername())
-                        .build()
-                )
-                .collect(Collectors.toList());
+        List<MessageResponseDTO> messages = messageService.getAllMessagesByPage(page);
+        return ResponseEntity.ok(messages);
     }
 
     @GetMapping("/user/{username}")
-    public ResponseEntity<List<Message>> getMessagesByUser(@PathVariable String username) {
-        List<Message> userMessages = messageService.getMessagesByUser(username);
+    public ResponseEntity<List<MessageResponseDTO>> getMessagesByUser(@PathVariable String username) {
+        List<MessageResponseDTO> userMessages = messageService.getMessagesByUser(username);
         return ResponseEntity.ok(userMessages);
     }
 }

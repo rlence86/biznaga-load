@@ -1,9 +1,9 @@
-You're reading the step 2 version of the README file. If you want to go to other step, use the corresponding git tag.
+You're reading the step 3 version of the README file. If you want to go to other step, use the corresponding git tag.
 
 Prerequisites: You need to have mvn and docker installed in your machine.
 
 # Step 2
-In this step we have added pagination to our get all messages endpoint. It will return 20 messages per page. This will allow us to put more concurrent users in the system.
+In this step we have added caching to our get all messages endpoint. It will return the same response for every page during 10 seconds, which will reduce the need of DB connections. This will allow us to put more concurrent users in the system.
 
 ```mermaid
 graph TD
@@ -33,7 +33,7 @@ erDiagram
     User ||--o{ Message : "has many"
 ```
 
-We have a simple application deployed on a container and a DB deployed on another. The application is exposing endpoints to register, login, create a message, retrieve all messages (paginated in groups of 20) and retrieve all messages from a given user.
+We have a simple application deployed on a container and a DB deployed on another. The application is exposing endpoints to register, login, create a message, retrieve all messages (paginated in groups of 20) and retrieve all messages from a given user. Retrieving paginated messages will refresh its value every 10 seconds.
 
 We use [JWT](https://jwt.io/) for authorisation tokens.
 
