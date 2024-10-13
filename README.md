@@ -2,7 +2,7 @@ You're reading the step 3 version of the README file. If you want to go to other
 
 Prerequisites: You need to have mvn and docker installed in your machine.
 
-# Step 2
+# Step 3
 In this step we have added caching to our get all messages endpoint. It will return the same response for every page during 10 seconds, which will reduce the need of DB connections. This will allow us to put more concurrent users in the system.
 
 ```mermaid
