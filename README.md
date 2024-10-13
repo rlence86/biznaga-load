@@ -14,6 +14,23 @@ graph TD
     end
 ```
 
+The relationship between Users and Messages is defined here:
+```mermaid
+erDiagram
+    User {
+        Long id
+        String username
+        String password
+        String email
+    }
+    Message {
+        Long id
+        String content
+        LocalDateTime createdAt
+    }
+    User ||--o{ Message : "has many"
+```
+
 We have a simple application deployed on a container and a DB deployed on another. The application is exposing endpoints to register, login, create a message, retrieve all messages and retrieve all messages from a given user.
 
 We use [JWT](https://jwt.io/) for authorisation tokens.
