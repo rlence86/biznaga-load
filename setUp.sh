@@ -36,6 +36,7 @@ cd -
 
 echo "Navigating to 'socialbiznaga' directory and running 'docker compose up' in detached mode..."
 cd ./socialbiznaga || { echo "Error: Failed to change to 'socialbiznaga' directory."; exit 1; }
+docker rmi socialbiznaga-backend:latest
 docker compose up -d
 
 cd -
