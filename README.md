@@ -1,5 +1,7 @@
 You're reading the step 1 version of the README file. If you want to go to other step, use the corresponding git tag.
 
+Prerequisites: You need to have mvn and docker installed in your machine.
+
 # Step 1
 This is the simplest of all examples we have. The idea is to deploy our system without any performance consideration and see how it breaks:
 
