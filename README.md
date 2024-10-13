@@ -1,9 +1,9 @@
-You're reading the step 1 version of the README file. If you want to go to other step, use the corresponding git tag.
+You're reading the step 2 version of the README file. If you want to go to other step, use the corresponding git tag.
 
 Prerequisites: You need to have mvn and docker installed in your machine.
 
-# Step 1
-This is the simplest of all examples we have. The idea is to deploy our system without any performance consideration and see how it breaks:
+# Step 2
+In this step we have added pagination to our get all messages endpoint. It will return 20 messages per page.
 
 ```mermaid
 graph TD
@@ -46,11 +46,11 @@ This will create all the containers and start the application. When it is up and
 ./runLoadTest.sh
 ```
 
-This scenario is adding 1 user every second to the system. The user is doing registration, login, posting 1 message and retrieving messages from other users. When all that is done, the user stops the activity.
+This scenario is adding 10 users every second to the system (after a ramp-up). The user is doing registration, login, posting 1 message and retrieving 5 pages of messages from other users. When all that is done, the user stops the activity.
 
 You can check the load test results in the console after running the test (a link is provided) and you can also check your product and DB metrics in Grafana and some trace examples in APM by opening http://localhost:5601/app/apm/services/social-biznaga.
 
-To run a breaking load test, just run
+To run a breaking load test, just run (this one will try to reach 20 concurrent users per second during 2 minutes)
 ```
 ./runHighLoadTest.sh
 ```

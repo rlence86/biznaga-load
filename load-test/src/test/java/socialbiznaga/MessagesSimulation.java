@@ -6,10 +6,7 @@ import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -64,10 +61,11 @@ public class MessagesSimulation extends Simulation {
                     )
                     .exitHereIfFailed()
                     .pause(1)
-                    .exec(http("getMessage")
-                            .get("/api/messages")
+                    .foreach(List.of("1","2","3","4","5"),"page")
+                    .on(exec(http("getMessage")
+                            .get("/api/messages/page/#{page}")
                             .header("Authorization", "Bearer #{token}")
-                            .check(status().is(200)))
+                            .check(status().is(200))))
                     .exitHereIfFailed();
 
     HttpProtocolBuilder httpProtocol =
@@ -85,7 +83,9 @@ public class MessagesSimulation extends Simulation {
         setUp(
                 messagesScenario.injectOpen(
                         atOnceUsers(1),
-                        constantUsersPerSec(1).during(60)
+                        rampUsersPerSec(1).to(10).during(30),
+                        constantUsersPerSec(10).during(120),
+                        rampUsersPerSec(10).to(1).during(30)
                 ).protocols(httpProtocol)
         );
     }

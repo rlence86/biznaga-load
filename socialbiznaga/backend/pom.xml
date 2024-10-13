@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ramonlence</groupId>
     <artifactId>social-biznaga</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>social-biznaga</name>
     <description>Social Network for Biznaga 2024</description>
     <properties>

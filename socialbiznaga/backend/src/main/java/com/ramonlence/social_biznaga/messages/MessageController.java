@@ -27,9 +27,9 @@ public class MessageController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<MessageResponseDTO>> getAllMessages() {
-        List<Message> messages = messageService.getAllMessages();
+    @GetMapping("/page/{page}")
+    public ResponseEntity<List<MessageResponseDTO>> getAllMessages(@PathVariable int page) {
+        List<Message> messages = messageService.getAllMessagesByPage(page);
         List<MessageResponseDTO> response = mapMessagesToMessageResponseDTO(messages);
         return ResponseEntity.ok(response);
     }
