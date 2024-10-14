@@ -7,11 +7,8 @@ docker compose down
 
 cd -
 
-echo "Navigating to 'socialbiznaga' directory and running 'docker compose down' in detached mode..."
-cd ./socialbiznaga || { echo "Error: Failed to change to 'socialbiznaga' directory."; exit 1; }
-docker compose down
-docker rmi socialbiznaga-backend:latest
-
-cd -
+echo "Cleaning up Kubernetes"
+kubectl delete namespace socialbiznaga
+kubectl delete namespace monitoring
 
 echo "Application is down"

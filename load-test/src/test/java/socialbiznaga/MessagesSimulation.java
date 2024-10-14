@@ -69,7 +69,7 @@ public class MessagesSimulation extends Simulation {
                     .exitHereIfFailed();
 
     HttpProtocolBuilder httpProtocol =
-            http.baseUrl("http://localhost:8080")
+            http.baseUrl("http://localhost:30000")
                     .acceptHeader("text/html,application/json")
                     .acceptLanguageHeader("en-US,en;q=0.5")
                     .acceptEncodingHeader("gzip, deflate")
@@ -83,9 +83,9 @@ public class MessagesSimulation extends Simulation {
         setUp(
                 messagesScenario.injectOpen(
                         atOnceUsers(1),
-                        rampUsersPerSec(1).to(20).during(30),
-                        constantUsersPerSec(20).during(120),
-                        rampUsersPerSec(20).to(1).during(30)
+                        rampUsersPerSec(1).to(25).during(30),
+                        constantUsersPerSec(25).during(120),
+                        rampUsersPerSec(25).to(1).during(30)
                 ).protocols(httpProtocol)
         );
     }

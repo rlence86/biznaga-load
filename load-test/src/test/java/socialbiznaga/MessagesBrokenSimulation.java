@@ -69,7 +69,7 @@ public class MessagesBrokenSimulation extends Simulation {
                     .exitHereIfFailed();
 
     HttpProtocolBuilder httpProtocol =
-            http.baseUrl("http://localhost:8080")
+            http.baseUrl("http://localhost:30000")
                     .acceptHeader("text/html,application/json")
                     .acceptLanguageHeader("en-US,en;q=0.5")
                     .acceptEncodingHeader("gzip, deflate")

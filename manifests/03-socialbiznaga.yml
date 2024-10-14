@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: social-biznaga-app
+  namespace: socialbiznaga
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: social-biznaga-app
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"
+      labels:
+        app: social-biznaga-app
+    spec:
+      containers:
+        - name: social-biznaga-app
+          image: socialbiznaga-backend:latest
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://host.docker.internal:3306/socialapp"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "root"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "example"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: social-biznaga-app
+  namespace: socialbiznaga
+spec:
+  type: NodePort
+  selector:
+    app: social-biznaga-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30000

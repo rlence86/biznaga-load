@@ -31,12 +31,15 @@ echo "Docker Compose is running in the background."
 echo "Trying to build the application with Maven"
 cd ./socialbiznaga/backend || { echo "Error: Failed to change to 'socialbiznaga' directory."; exit 1; }
 mvn clean install || { echo "Error: Failed building the application."; exit 1; }
+docker rmi socialbiznaga-backend:latest
+docker build . -t socialbiznaga-backend:latest
 
 cd -
 
-echo "Navigating to 'socialbiznaga' directory and running 'docker compose up' in detached mode..."
-cd ./socialbiznaga || { echo "Error: Failed to change to 'socialbiznaga' directory."; exit 1; }
-docker rmi socialbiznaga-backend:latest
-docker compose up -d
+echo "Creating elements in Kubernetes"
+cd ./manifests || { echo "Error: Failed to change to 'manifests' directory."; exit 1; }
+kubectl apply -f 01-namespaces.yml
+kubectl apply -f 02-prometheus.yml
+kubectl apply -f 03-socialbiznaga.yml
 
 cd -
