@@ -4,7 +4,7 @@ metadata:
   name: social-biznaga-app
   namespace: socialbiznaga
 spec:
-  replicas: 6
+  replicas: 2
   selector:
     matchLabels:
       app: social-biznaga-app

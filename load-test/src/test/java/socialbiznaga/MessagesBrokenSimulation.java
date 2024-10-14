@@ -83,9 +83,9 @@ public class MessagesBrokenSimulation extends Simulation {
         setUp(
                 messagesScenario.injectOpen(
                         atOnceUsers(1),
-                        rampUsersPerSec(1).to(25).during(30),
+                        rampUsersPerSec(1).to(25).during(45),
                         constantUsersPerSec(25).during(120),
-                        rampUsersPerSec(25).to(1).during(30)
+                        rampUsersPerSec(25).to(1).during(45)
                 ).protocols(httpProtocol)
         );
     }
