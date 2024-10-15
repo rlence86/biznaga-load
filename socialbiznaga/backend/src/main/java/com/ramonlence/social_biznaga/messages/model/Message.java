@@ -33,5 +33,5 @@ public class Message {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private String userName;
+    private String username;
 }

@@ -32,7 +32,7 @@ public class MessageService {
                 .content(messageDto.getContent())
                 .createdAt(LocalDateTime.now())
                 .userId(userId)
-                .userName(userName)
+                .username(userName)
                 .build();
         return messageRepository.save(message);
     }
@@ -47,7 +47,7 @@ public class MessageService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        return mapMessagesToMessageResponseDTO(messageRepository.findByUser(user));
+        return mapMessagesToMessageResponseDTO(messageRepository.findByUserId(user.getId()));
     }
 
 
@@ -56,7 +56,7 @@ public class MessageService {
                 .map(message -> MessageResponseDTO.builder()
                         .content(message.getContent())
                         .createdAt(message.getCreatedAt())
-                        .userName(message.getUserName())
+                        .userName(message.getUsername())
                         .build()
                 )
                 .collect(Collectors.toList());

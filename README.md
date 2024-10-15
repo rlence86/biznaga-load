@@ -1,9 +1,9 @@
-You're reading the step 4 version of the README file. If you want to go to other step, use the corresponding git tag.
+You're reading the step 5 version of the README file. If you want to go to other step, use the corresponding git tag.
 
 Prerequisites: You need to have mvn, docker and kubectl installed in your machine.
 
-# Step 4
-In this step we are moving the application inside a Kubernetes cluster. The starting point is with 2 pods.
+# Step 5
+In this step we are removing dependencies between messages and users tables in order to improve performance. We are also removing calls to users table on every authentication check. We trust JWT information so, for that, we are also including user id in the JWT token.
 
 ```mermaid
 graph TD
@@ -46,7 +46,7 @@ We have a simple application deployed on Kubernetes and a DB deployed on a conta
 
 We use [JWT](https://jwt.io/) for authorisation tokens.
 
-To run this step, just run inside this folder (check it has execute permissions, otherwise run chmod 755 on these script files)
+To run this step, just run inside this folder (check it has execute permissions, otherwise run chmod 755 on these script files). You also need to remove any volume the db could have generated in your docker because the structure is changing in this step.
 ```
 ./setUp.sh
 ```
