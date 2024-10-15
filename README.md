@@ -60,11 +60,6 @@ This scenario is adding users every second to the system (after a ramp-up). The 
 
 You can check the load test results in the console after running the test (a link is provided) and you can also check your product and DB metrics in Grafana and some trace examples in APM by opening http://localhost:5601/app/apm/services/social-biznaga.
 
-To run a breaking load test, just run
-```
-./runHighLoadTest.sh
-```
-
 To test the scenario with more pods, you can change the replicas field in manifests/03-socialbiznaga.yml
 
 When you are done, run 
