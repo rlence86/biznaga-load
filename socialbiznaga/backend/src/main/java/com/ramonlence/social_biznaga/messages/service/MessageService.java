@@ -26,11 +26,14 @@ public class MessageService {
 
     private UserRepository userRepository;
 
-    public Message createMessage(String username, MessageDTO messageDto) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    public Message createMessage(String userName, Long userId, MessageDTO messageDto) {
 
-        Message message = Message.builder().content(messageDto.getContent()).createdAt(LocalDateTime.now()).user(user).build();
+        Message message = Message.builder()
+                .content(messageDto.getContent())
+                .createdAt(LocalDateTime.now())
+                .userId(userId)
+                .userName(userName)
+                .build();
         return messageRepository.save(message);
     }
 
@@ -53,7 +56,7 @@ public class MessageService {
                 .map(message -> MessageResponseDTO.builder()
                         .content(message.getContent())
                         .createdAt(message.getCreatedAt())
-                        .userName(message.getUser().getUsername())
+                        .userName(message.getUserName())
                         .build()
                 )
                 .collect(Collectors.toList());

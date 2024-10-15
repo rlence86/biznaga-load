@@ -23,7 +23,8 @@ public class MessageController {
     @PostMapping
     public ResponseEntity<Void> createMessage(@Validated @RequestBody MessageDTO messageDto, Authentication authentication) {
         String username = authentication.getName();
-        messageService.createMessage(username, messageDto);
+        Long userId = Long.parseLong(authentication.getCredentials().toString());
+        messageService.createMessage(username, userId, messageDto);
         return ResponseEntity.accepted().build();
     }
 

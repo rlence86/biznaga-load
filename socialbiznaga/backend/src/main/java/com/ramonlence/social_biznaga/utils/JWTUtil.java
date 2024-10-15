@@ -21,12 +21,13 @@ public class JWTUtil {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, Long id) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .setSubject(username)
+                .setId(id.toString())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -41,6 +42,16 @@ public class JWTUtil {
                 .getBody();
 
         return claims.getSubject();
+    }
+
+    public Long getIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return Long.parseLong(claims.getId());
     }
 
     public boolean validateToken(String token) {

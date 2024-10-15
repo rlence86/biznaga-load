@@ -40,7 +40,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid username or password"));
 
         if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            return jwtUtil.generateToken(user.getUsername());
+            return jwtUtil.generateToken(user.getUsername(), user.getId());
         } else {
             throw new IllegalArgumentException("Invalid username or password");
         }
