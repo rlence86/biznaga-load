@@ -64,6 +64,8 @@ To run a breaking load test, just run
 ./runHighLoadTest.sh
 ```
 
+To test the scenario with more pods, you can change the replicas field in manifests/03-socialbiznaga.yml
+
 When you are done, run 
 ```
 ./tearDown.sh
@@ -72,5 +74,5 @@ to destroy all containers
 
 ## Check Grafana
 Go to http://localhost:3000/login and use admin/admin as credentials (it will as you to change if you wish). The first thing to do in Grafana, if you haven't done, is to setup a Data Source. Go to http://localhost:3000/connections/datasources/new and select Prometheus. Then in the Prometheus url add http://host.docker.internal:30090 and you can click on save and test. 
-Now you should create your dashboard, so go to http://localhost:3000/dashboards and click on new > import or go to http://localhost:3000/dashboard/import and then you can upload the spring_board.json file (select your Prometheus source) and save. You can do the same with mysql_board.json to have a MySQL board.
+Now you should create your dashboard, so go to http://localhost:3000/dashboards and click on new > import or go to http://localhost:3000/dashboard/import and then you can upload the spring_board.json file (select your Prometheus source) and save. You can do the same with mysql_board.json to have a MySQL board. The data for MySQL will come from http://prometheus:9090
 Both dashboards will now appear in http://localhost:3000/dashboards so you can check them.
