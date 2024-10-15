@@ -25,7 +25,7 @@ graph TD
     Pod2 --> DB
 ```
 
-The relationship between Users and Messages is defined here:
+There is no relationship between Users and Messages (in the DB tables):
 ```mermaid
 erDiagram
     User {
@@ -38,8 +38,9 @@ erDiagram
         Long id
         String content
         LocalDateTime createdAt
+        Long userId
+        String username
     }
-    User ||--o{ Message : "has many"
 ```
 
 We have a simple application deployed on Kubernetes and a DB deployed on a container. The application is exposing endpoints to register, login, create a message, retrieve all messages (paginated in groups of 20) and retrieve all messages from a given user. Retrieving paginated messages will refresh its value every 10 seconds.
