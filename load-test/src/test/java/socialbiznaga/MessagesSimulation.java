@@ -85,7 +85,8 @@ public class MessagesSimulation extends Simulation {
                         atOnceUsers(1),
                         rampUsersPerSec(1).to(25).during(45),
                         constantUsersPerSec(25).during(120),
-                        rampUsersPerSec(25).to(1).during(45)
+                        rampUsersPerSec(25).to(40).during(45),
+                        constantUsersPerSec(40).during(120)
                 ).protocols(httpProtocol)
         );
     }

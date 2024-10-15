@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-adapter-config
+  namespace: socialbiznaga
+data:
+  config.yaml: |
+    rules:
+      - seriesQuery: 'hikaricp_connections_active{pod_name=~".*"}'
+        resources:
+          overrides:
+            pod_name:
+              resource: "pod"
+        name:
+          matches: "^(.*)_connections_active"
+          as: "${1}_active_connections"
+        metricsQuery: 'sum(hikaricp_connections_active{pod_name=~".*"}) by (pod_name)'
