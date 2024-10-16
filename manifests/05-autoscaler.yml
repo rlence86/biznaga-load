@@ -9,11 +9,11 @@ spec:
     kind: Deployment
     name: social-biznaga-app
   minReplicas: 2
-  maxReplicas: 5
+  maxReplicas: 4
   metrics:
   - type: Resource
     resource:
       name: cpu
       target:
         type: AverageValue
-        averageValue: 500m
+        averageValue: 600m
