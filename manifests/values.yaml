@@ -129,15 +129,15 @@ readinessProbe:
 startupProbe: {}
 
 rules:
-- seriesQuery: 'hikaricp_connections_active{pod_name=~".*", app_label=~".*"}'
-  resources:
-    overrides:
-      pod_name: {resource: "pod"}
-      app_label: {resource: "app"}
-  name:
-    matches: "^(.*)_connections_active"
-    as: "${1}_active_connections"
-  metricsQuery: 'sum(hikaricp_connections_active{pod_name=~".*", app_label=~".*"}) by (pod_name)'
+  - seriesQuery: 'hikaricp_connections_active{pod_name=~".*", app_label=~".*"}'
+    resources:
+      overrides:
+        pod_name: {resource: "pod"}
+        app_label: {resource: "app"}
+    name:
+      matches: "^(.*)_connections_active"
+      as: "${1}_active_connections"
+    metricsQuery: 'sum(hikaricp_connections_active{pod_name=~".*", app_label=~".*"}) by (pod_name)'
 
 service:
   annotations: {}

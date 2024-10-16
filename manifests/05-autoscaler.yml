@@ -9,12 +9,11 @@ spec:
     kind: Deployment
     name: social-biznaga-app
   minReplicas: 2
-  maxReplicas: 10
+  maxReplicas: 5
   metrics:
-  - type: Pods
-    pods:
-      metric:
-        name: hikaricp_active_connections
+  - type: Resource
+    resource:
+      name: cpu
       target:
         type: AverageValue
-        averageValue: 5
+        averageValue: 500m

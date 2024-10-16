@@ -41,8 +41,7 @@ cd ./manifests || { echo "Error: Failed to change to 'manifests' directory."; ex
 kubectl apply -f 01-namespaces.yml
 kubectl apply -f 02-prometheus.yml
 kubectl apply -f 03-socialbiznaga.yml
-kubectl apply -f 04-configmap.yml
-helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace socialbiznaga --values values.yaml
+kubectl apply -f 04-metrics-components.yml
 kubectl apply -f 05-autoscaler.yml
 
 cd -
