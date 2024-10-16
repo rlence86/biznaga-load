@@ -8,6 +8,7 @@ docker compose down
 cd -
 
 echo "Cleaning up Kubernetes"
+helm uninstall prometheus-adapter -n socialbiznaga
 kubectl delete namespace socialbiznaga
 kubectl delete namespace monitoring
 

@@ -40,10 +40,9 @@ echo "Creating elements in Kubernetes"
 cd ./manifests || { echo "Error: Failed to change to 'manifests' directory."; exit 1; }
 kubectl apply -f 01-namespaces.yml
 kubectl apply -f 02-prometheus.yml
-helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace socialbiznaga
 kubectl apply -f 03-socialbiznaga.yml
 kubectl apply -f 04-configmap.yml
-helm upgrade --namespace socialbiznaga --values values.yaml prometheus-adapter prometheus-community/prometheus-adapter
+helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace socialbiznaga --values values.yaml
 kubectl apply -f 05-autoscaler.yml
 
 cd -
