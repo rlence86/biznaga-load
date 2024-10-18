@@ -1,53 +1,15 @@
-You're reading the step 5 version of the README file. If you want to go to other step, use the corresponding git tag.
+You're reading the step 6 version of the README file. If you want to go to other step, use the corresponding git tag.
 
-Prerequisites: You need to have mvn, docker, kubectl and helm installed in your machine.
+Prerequisites: You need to have mvn, docker and kubectl installed in your machine.
 
-# Step 5
-In this step we are removing dependencies between messages and users tables in order to improve performance. We are also removing calls to users table on every authentication check. We trust JWT information so, for that, we are also including user id in the JWT token.
-
-```mermaid
-graph TD
-    subgraph External
-        UserRequest["User Requests"]
-        DB[(MySQL Database)]
-    end
-
-    subgraph Kubernetes Cluster
-        LB["Load Balancer (Service)"]
-        Pod1["Pod 1"]
-        Pod2["Pod 2"]
-    end
-
-    UserRequest --> LB
-    LB --> Pod1
-    LB --> Pod2
-    Pod1 --> DB
-    Pod2 --> DB
-```
-
-There is no relationship between Users and Messages (in the DB tables):
-```mermaid
-erDiagram
-    User {
-        Long id
-        String username
-        String password
-        String email
-    }
-    Message {
-        Long id
-        String content
-        LocalDateTime createdAt
-        Long userId
-        String username
-    }
-```
+# Step 6
+In this step we are adding HPA (Horizonal Pod Autoscaler). In this example it is based on CPU use.
 
 We have a simple application deployed on Kubernetes and a DB deployed on a container. The application is exposing endpoints to register, login, create a message, retrieve all messages (paginated in groups of 20) and retrieve all messages from a given user. Retrieving paginated messages will refresh its value every 10 seconds.
 
 We use [JWT](https://jwt.io/) for authorisation tokens.
 
-To run this step, just run inside this folder (check it has execute permissions, otherwise run chmod 755 on these script files). You also need to remove any volume the db could have generated in your docker because the structure is changing in this step.
+To run this step, just run inside this folder (check it has execute permissions, otherwise run chmod 755 on these script files).
 ```
 ./setUp.sh
 ```
@@ -59,8 +21,6 @@ This will create all the containers and apply all Kubernetes manifests and start
 This scenario is adding users every second to the system (after a ramp-up). The user is doing registration, login, posting 1 message and retrieving 5 pages of messages from other users. When all that is done, the user stops the activity.
 
 You can check the load test results in the console after running the test (a link is provided) and you can also check your product and DB metrics in Grafana and some trace examples in APM by opening http://localhost:5601/app/apm/services/social-biznaga.
-
-To test the scenario with more pods, you can change the replicas field in manifests/03-socialbiznaga.yml
 
 When you are done, run 
 ```

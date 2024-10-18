@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hpa-based-on-hikaricp-connections
+  name: hpa-based-on-cpu
   namespace: socialbiznaga
 spec:
   scaleTargetRef:
