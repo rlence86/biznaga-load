@@ -1,34 +1,25 @@
-You're reading the step 6 version of the README file. If you want to go to other step, use the corresponding git tag.
+# Biznaga Load
+This is a companion repository for the talk "Diseño y evaluación de sistemas guiados por pruebas de rendimiento".
+In this repo, you can navigate the different 6 steps followed in the design of the system.
 
-Prerequisites: You need to have mvn, docker and kubectl installed in your machine.
+## Step 1
+It is marked in the repo with the tag v1.0. This is the initial example.
 
-# Step 6
-In this step we are adding HPA (Horizonal Pod Autoscaler). In this example it is based on CPU use.
+## Step 2
+It is marked in the repo with the tag v2.0. This adds pagination to the getMessages endpoint.
 
-We have a simple application deployed on Kubernetes and a DB deployed on a container. The application is exposing endpoints to register, login, create a message, retrieve all messages (paginated in groups of 20) and retrieve all messages from a given user. Retrieving paginated messages will refresh its value every 10 seconds.
+## Step 3
+It is marked in the repo with the tag v3.0. This adds caching to the getMessages endpoint.
 
-We use [JWT](https://jwt.io/) for authorisation tokens.
+## Step 4
+It is marked in the repo with the tag v4.0. This moves the application to Kubernetes.
 
-To run this step, just run inside this folder (check it has execute permissions, otherwise run chmod 755 on these script files).
-```
-./setUp.sh
-```
-This will create all the containers and apply all Kubernetes manifests and start the application. When it is up and running you can run
-```
-./runLoadTest.sh
-```
+## Step 5
+It is marked in the repo with the tag v5.0. This denormalizes the DB.
 
-This scenario is adding users every second to the system (after a ramp-up). The user is doing registration, login, posting 1 message and retrieving 5 pages of messages from other users. When all that is done, the user stops the activity.
+## Step 6
+It is marked in the repo with the tag v6.0. This adds Horizontal Pod Autoscaler.
 
-You can check the load test results in the console after running the test (a link is provided) and you can also check your product and DB metrics in Grafana and some trace examples in APM by opening http://localhost:5601/app/apm/services/social-biznaga.
+Every step contains its own README.md file. All of them have a setUp.sh file to automate the creation of the containers and start the application. They also have a tearDown.sh file to remove all when you are done. Most of them have runLoadTest.sh and runHighLoadTest.sh. They will run different load test scenarios depending on the step you're in.
 
-When you are done, run 
-```
-./tearDown.sh
-```
-to destroy all containers
-
-## Check Grafana
-Go to http://localhost:3000/login and use admin/admin as credentials (it will as you to change if you wish). The first thing to do in Grafana, if you haven't done, is to setup a Data Source. Go to http://localhost:3000/connections/datasources/new and select Prometheus. Then in the Prometheus url add http://host.docker.internal:30090 and you can click on save and test. 
-Now you should create your dashboard, so go to http://localhost:3000/dashboards and click on new > import or go to http://localhost:3000/dashboard/import and then you can upload the spring_board.json file (select your Prometheus source) and save. You can do the same with mysql_board.json to have a MySQL board. The data for MySQL will come from http://prometheus:9090
-Both dashboards will now appear in http://localhost:3000/dashboards so you can check them.
+When you move between steps 1-4 to steps 5-6 or vice-versa, you should make sure you're removing your docker volume of the DB because DB schema is changing and they are incompatible; setUp.sh will regenerate it for you.
